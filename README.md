@@ -1,4 +1,14 @@
-# scratch-gui
+# Scratch++
+#### Scratch++ is a Scratch mod that adds new blocks which can compile to normal Scratch.
+
+## How to use
+Example:
+In the editor, write a script with a new block (like the power operator).
+```scratchblocks
+when 🏳️ clicked
+say ( 5 ^ 3 )
+```
+Then, click on `File` > `Compile to Scratch (.sb3)`. It should download an sb3 file that is fully compatible with normal Scratch.
 
 ## Installation
 This requires you to have Git and Node.js installed.
