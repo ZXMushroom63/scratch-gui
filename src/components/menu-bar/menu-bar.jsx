@@ -282,7 +282,7 @@ class MenuBar extends React.Component {
             event.preventDefault();
         }
     }
-    getSaveToComputerHandler (downloadProjectCallback) {
+    getSaveToComputerHandler(downloadProjectCallback) {
         return () => {
             this.props.onRequestCloseFile();
             downloadProjectCallback();
@@ -433,7 +433,7 @@ class MenuBar extends React.Component {
                                 })}
                                 draggable={false}
                                 src={this.props.logo}
-                                onClick={this.props.onClickLogo}
+                                onClick={(ev)=>{var elem = ev.target; elem.classList.add("popAnim"); setTimeout(()=>{elem.classList.remove("popAnim");}, 125);}}
                             />
                         </div>
                         {(this.props.canChangeTheme || this.props.canChangeLanguage) && (<SettingsMenu
@@ -497,9 +497,9 @@ class MenuBar extends React.Component {
                                         <MenuItem
                                             onClick={this.props.onStartSelectingFileUpload}
                                         >
-                                            {this.props.intl.formatMessage(sharedMessages.loadFromComputerTitle)}
+                                            {this.props.intl.formatMessage(sharedMessages.loadFromComputerTitle)} (.sbpp)
                                         </MenuItem>
-                                        <SB3Downloader>{(className, downloadProjectCallback) => (
+                                        <SB3Downloader>{(className, downloadProjectCallback, downloadProjectOldCallback) => (
                                             <MenuItem
                                                 className={className}
                                                 onClick={this.getSaveToComputerHandler(downloadProjectCallback)}
@@ -508,7 +508,15 @@ class MenuBar extends React.Component {
                                                     defaultMessage="Save to your computer"
                                                     description="Menu bar item for downloading a project to your computer" // eslint-disable-line max-len
                                                     id="gui.menuBar.downloadToComputer"
-                                                />
+                                                /> (.sbpp)
+                                            </MenuItem>
+                                        )}</SB3Downloader>
+                                        <SB3Downloader>{(className, downloadProjectCallback, downloadProjectOldCallback) => (
+                                            <MenuItem
+                                                className={className}
+                                                onClick={this.getSaveToComputerHandler(downloadProjectOldCallback)}
+                                            >
+                                                Compile to Scratch (.sb3)
                                             </MenuItem>
                                         )}</SB3Downloader>
                                     </MenuSection>

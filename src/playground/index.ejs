@@ -1,12 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="google" value="notranslate">
-    <link rel="shortcut icon" href="static/favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="google" value="notranslate" />
+        <link rel="shortcut icon" href="static/favicon.png" />
+        <title><%= htmlWebpackPlugin.options.title %></title>
+        <style>
+            .popAnim {
+                transform: scale(1.2);
+            }
+            .splashHidden {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            window.addEventListener("keyup", (ev) => {
+                if (
+                    ev.target &&
+                    ev.target.value &&
+                    ev.target.value.startsWith("$rt.")
+                ) {
+                    ev.target.value = ev.target.value.substring("$rt.".length);
+                }
+            });
+            window.addEventListener("load", ()=>{
+                if(!(localStorage.getItem("alreadyShowedSplash") === "true")) {
+                    document.getElementById("splash").classList.remove("splashHidden");
+                }
+            });
+        </script>
+        <div id="splash"
+            style="
+                background-color: lightgray;
+                border: 2px solid black;
+                padding: 2rem;
+                position: fixed;
+                width: 75%;
+                height: 75%;
+                top: 12.5%;
+                left: 12.5%;
+                z-index: 9999;
+                border-radius: 1rem;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            "
+            class="splashHidden"
+        >
+            <h2>
+                Welcome to Scratch++!
+                <button
+                    style="
+                        border: 0;
+                        background-color: transparent;
+                        text-decoration: underline;
+                        color: red;
+                        font-weight: bold;
+                        cursor: pointer;
+                    "
+                    onclick="localStorage.setItem('alreadyShowedSplash', 'true'); document.getElementById('splash').classList.add('splashHidden')"
+                    style="cursor: pointer"
+                >
+                    <h2>[X]</h2>
+                </button>
+            </h2>
+            <p>
+                Scratch++ is a Scratch mod that adds new features like fencing
+                controls and the power operator. However, unlike other scratch
+                mods, it also adds the ability to compile the project for use in
+                normal Scratch!<br><br>
+
+                For example, try using a disable fencing block (or any modded block). Then, convert your project to a regular Scratch project by clicking on <code>File > Compile to Scratch</code>. It should be able to load and work in normal Scratch! Just make sure your remember that all the custom blocks have Scratch definitions, so things will likely run slower in normal Scratch.
+
+                Credits:
+                <ul>
+                    <li>ZXMushroom63 - Scratch++ concept, compiler, GUI, and many custom block definitions.</li>
+                    <li>DadOfMrLog - Power script</li>
+                    <li>NitroCipher - Decimal Color at X Y calculator</li>
+                    <li>EncloCreations - Decimal to Hexadecimal</li>
+                </ul>
+            </p>
+        </div>
+    </body>
 </html>
