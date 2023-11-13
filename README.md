@@ -24,7 +24,7 @@ npm run translate
 sudo npm run prepublish #Requires python 2 and Java installed!!!
 
 cd ../scratch-gui
-npm link ../scratch-blocks ../scratch-vm
+npm link ../scratch-blocks ../scratch-vm #Might also need sudo
 
 # Now, to run it in localhost:
 npm start
