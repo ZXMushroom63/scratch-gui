@@ -45,6 +45,20 @@ npm start
 npm run build
 # Outputs to the build folder
 ```
+## Current feature list
+- fencing control blocks
+- power operator
+- previous costume & previous backdrop
+- force set size
+- point to X Y
+- min operator
+- max operator
+- if operator
+- replace x with y in z operator
+- newline reporter
+- decimal to hexadecimal operator
+- color at my position reporter
+- set list to x split by y
 
 ## Testing
 ### Documentation
