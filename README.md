@@ -11,6 +11,8 @@ say ( 5 ^ 3 )
 Then, click on `File` > `Compile to Scratch (.sb3)`. It should download an sb3 file that is fully compatible with normal Scratch.
 
 ## Installation
+#### You can download a prebuilt release from the releases section.
+
 This requires you to have Git and Node.js installed.
 
 
