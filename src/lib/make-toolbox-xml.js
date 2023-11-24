@@ -617,6 +617,18 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="operator_fastpower">
+            <value name="NUM1">
+                <shadow type="math_number">
+                    <field name="NUM"/>
+                </shadow>
+            </value>
+            <value name="NUM2">
+                <shadow type="math_number">
+                    <field name="NUM"/>
+                </shadow>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="operator_random">
             <value name="FROM">
@@ -715,6 +727,23 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                     </shadow>
                 </value>
             </block>
+            <block type="operator_substring">
+                <value name="LETTER1">
+                    <shadow type="math_whole_number">
+                        <field name="NUM">3</field>
+                    </shadow>
+                </value>
+                <value name="LETTER2">
+                    <shadow type="math_whole_number">
+                        <field name="NUM">5</field>
+                    </shadow>
+                </value>
+                <value name="STRING">
+                    <shadow type="text">
+                        <field name="TEXT">${apple}</field>
+                    </shadow>
+                </value>
+            </block>
             <block type="operator_length">
                 <value name="STRING">
                     <shadow type="text">
@@ -731,6 +760,30 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
               <value name="STRING2">
                 <shadow type="text">
                   <field name="TEXT">${letter}</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="operator_startswith">
+              <value name="STRING1">
+                <shadow type="text">
+                  <field name="TEXT">${apple}</field>
+                </shadow>
+              </value>
+              <value name="STRING2">
+                <shadow type="text">
+                  <field name="TEXT">${letter}</field>
+                </shadow>
+              </value>
+            </block>
+            <block type="operator_endswith">
+              <value name="STRING1">
+                <shadow type="text">
+                  <field name="TEXT">${apple}</field>
+                </shadow>
+              </value>
+              <value name="STRING2">
+                <shadow type="text">
+                  <field name="TEXT">e</field>
                 </shadow>
               </value>
             </block>

@@ -36,7 +36,7 @@
             style="
                 background-color: lightgray;
                 border: 2px solid black;
-                padding: 2rem;
+                padding: 1rem;
                 position: fixed;
                 width: 75%;
                 height: 75%;
@@ -81,6 +81,83 @@
                     <li>EncloCreations - Decimal to Hexadecimal</li>
                 </ul>
             </p>
+        </div>
+        <div id="sppsettings"
+            style="
+                background-color: lightgray;
+                border: 2px solid black;
+                padding: 1rem;
+                position: fixed;
+                width: 75%;
+                height: 75%;
+                top: 12.5%;
+                left: 12.5%;
+                z-index: 9999;
+                border-radius: 1rem;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            "
+            class="splashHidden"
+        >
+            <h2 style="padding: 0; margin: 0;">
+                Scratch++ Settings
+                <button
+                    style="
+                        border: 0;
+                        background-color: transparent;
+                        text-decoration: underline;
+                        color: red;
+                        font-weight: bold;
+                        cursor: pointer;
+                    "
+                    onclick="document.getElementById('sppsettings').classList.add('splashHidden')"
+                    style="cursor: pointer"
+                >
+                    <h2>[X]</h2>
+                </button>
+            </h2>
+            <p>Changing these settings requires a reload.</p>
+            <table>
+                <tr>
+                    <td>
+                        Cat Blocks
+                    </td>
+                    <td>
+                        <input type="checkbox" oninput="localStorage.setItem('catblocks', this.checked)" id="catblocks">
+                        <script>if (localStorage.getItem("catblocks") === "true"){document.querySelector("#catblocks").setAttribute("checked", "")}</script>
+                    </td>
+                    <td><small>Brings back the 2020 cat blocks.</small></td>
+                </tr>
+                <tr>
+                    <td>
+                        Blocks2Image
+                    </td>
+                    <td>
+                        <input type="checkbox" oninput="localStorage.setItem('blocks2image', this.checked)" id="blocks2image">
+                        <script>if (localStorage.getItem("blocks2image") === "true"){document.querySelector("#blocks2image").setAttribute("checked", "")}</script>
+                    </td>
+                    <td><small>Adds export to image options to the right-click menu.</small></td>
+                </tr>
+                <tr>
+                    <td>
+                        Numberpad
+                    </td>
+                    <td>
+                        <input type="checkbox" oninput="localStorage.setItem('numberpad', this.checked)" id="numberpad">
+                        <script>if (localStorage.getItem("numberpad") === "true"){document.querySelector("#numberpad").setAttribute("checked", "")}</script>
+                    </td>
+                    <td><small>Force shows the number pad on number inputs.</small></td>
+                </tr>
+                <tr>
+                    <td>
+                        Cherry Picking
+                    </td>
+                    <td>
+                        <input type="checkbox" oninput="localStorage.setItem('cherrypicking', this.checked)" id="cherrypicking">
+                        <script>if (localStorage.getItem("cherrypicking") === "true"){document.querySelector("#cherrypicking").setAttribute("checked", "")}</script>
+                    </td>
+                    <td><small>Grab single blocks by dragging with the Ctrl key.</small></td>
+                </tr>
+            </table>
         </div>
     </body>
 </html>

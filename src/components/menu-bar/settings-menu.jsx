@@ -50,6 +50,11 @@ const SettingsMenu = ({
                 {canChangeTheme && <ThemeMenu onRequestCloseSettings={onRequestClose} />}
                 <MenuItem onClick={()=>{document.getElementById("splash").classList.remove("splashHidden")}}>Show splash</MenuItem>
             </MenuSection>
+            <MenuSection>
+                {canChangeLanguage && <LanguageMenu onRequestCloseSettings={onRequestClose} />}
+                {canChangeTheme && <ThemeMenu onRequestCloseSettings={onRequestClose} />}
+                <MenuItem onClick={()=>{document.getElementById("sppsettings").classList.remove("splashHidden")}}>Open Scratch++ settings</MenuItem>
+            </MenuSection>
         </MenuBarMenu>
     </div>
 );
