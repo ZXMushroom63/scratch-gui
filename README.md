@@ -59,8 +59,11 @@ npm run build
 - decimal to hexadecimal operator
 - color at my position reporter
 - set list to x split by y
-- Network extension (coming soon - ~3 days)
+- Network extension
 - fastpower
+- letters x to y of string
+- starts with
+- ends with
 
 ## Testing
 ### Documentation
