@@ -60,6 +60,7 @@ npm run build
 - color at my position reporter
 - set list to x split by y
 - Network extension (coming soon - ~3 days)
+- fastpower
 
 ## Testing
 ### Documentation
