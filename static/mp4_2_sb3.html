@@ -50,6 +50,8 @@
     <label> &lt;- Aspect Ratio Maintainence</label><br>
 
     <select id="resolutionControls">
+        <option value=16>7680x5760 (x16)</option>
+        <option value=12>5760x4320 (x12)</option>
         <option value=8>3840x2880 (x8)</option>
         <option value=6>2880x2160 (x6)</option>
         <option value=4>1920x1440 (x4)</option>
@@ -71,6 +73,8 @@
         Processed frames:
         Saved sheets:
         Saved assets:
+        Largest asset: 0MB/10MB
+        Total project size: 0MB/47.5MB (accounting for largest possible json)
     </span>
     <br>
     <progress id="progressBar" min=0 max=100 value=0></progress><br>
@@ -80,7 +84,9 @@
             status: "Awaiting input...",
             processedFrames: 0,
             sheets: 0,
-            assets: 0
+            assets: 0,
+            largestAssetSize: 0,
+            totalProjectSize: 0
         }
         function wait(d) {
             return new Promise((res, rej)=>{
@@ -116,7 +122,9 @@
                 Status: ${progInfo.status}<br>
                 Processed frames: ${progInfo.processedFrames}<br>
                 Saved spritesheets: ${progInfo.sheets}<br>
-                Saved assets: ${progInfo.assets} (try to keep this below 200 to avoid auto-bans. Hint: use tiling variable!)
+                Saved assets: ${progInfo.assets} (try to keep this below 200 to avoid auto-bans. Hint: use tiling variable!)<br>
+                Largest asset: ${(progInfo.largestAssetSize / 1024 / 1024).toFixed(1)}MB/10.0MB<br>
+                Total project size: ${(progInfo.totalProjectSize / 1024 / 1024).toFixed(1)}MB/47.5MB (accounting for largest possible json)
                 `;
             }
             updateProgInfo();
@@ -185,7 +193,7 @@
                 return new Promise((res, rej)=>{
                     canvas.toBlob((blob)=>{
                         zip.file(fileName, blob);
-                        res({string: str, fileName: fileName});
+                        res({string: str, fileName: fileName, size: blob.size});
                     }, "image/"+format, quality);
                 });
             }
@@ -194,7 +202,7 @@
                 var fileName = str + ".mp3";
                 return new Promise((res, rej)=>{
                     zip.file(fileName, audio);
-                    res({string: str, fileName: fileName});
+                    res({string: str, fileName: fileName, size: audio.size});
                 });
             }
             async function generate() {
@@ -207,6 +215,8 @@
                 progInfo.processedFrames = 0;
                 progInfo.sheets = 0;
                 progInfo.assets = 0;
+                progInfo.largestAssetSize = 0;
+                progInfo.totalProjectSize = 0;
                 progInfo.status = "Init";
                 updateProgInfo();
                 res = [480, 360].map((x)=>{return x * parseFloat(elems.resolutionControls.value)});
@@ -291,6 +301,8 @@
                         }
                         audioSegmentBlob = new Blob(audioComponents, {type: 'audio/mp3'});
                         var storedAudio = await storeAudioBlobInZip(audioSegmentBlob, sb3);
+                        progInfo.totalProjectSize += storedAudio.size;
+                        progInfo.largestAssetSize = Math.max(progInfo.largestAssetSize, storedAudio.size);
                         audioSegments.push({
                             "name": "s"+i,
                             "assetId": storedAudio.string,
@@ -333,6 +345,8 @@
 
                     if ((i + 1) % Math.pow(tiling, 2) === 0 || i === framesToBePackaged - 1) {
                         var frame = await storeCanvasInZip(elems.tilingCanvas, sb3, imageQuality, format, legalFormat);
+                        progInfo.totalProjectSize += frame.size;
+                        progInfo.largestAssetSize = Math.max(progInfo.largestAssetSize, frame.size);
                         storedFrames.push(frame);
                         costumes.push({
                             "name": "c"+ Math.floor(i / Math.pow(tiling, 2)),
