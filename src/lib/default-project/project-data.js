@@ -38,14 +38,14 @@ const projectData = translateFunction => {
                     ]
                 },
                 comments: {
-                    "af16__spp_compile_cfg__::compileFlags": {
+                    "__spp_compile_cfg__::compileFlags": {
                         "blockId": null,
                         "x": 200,
                         "y": 200,
                         "width": 200,
                         "height": 200,
                         "minimized": false,
-                        "text": "$rt.__spp_compile_cfg__"
+                        "text": "$rt.__spp_compile_cfg__\n{}"
                     }
                 },
                 lists: {},
