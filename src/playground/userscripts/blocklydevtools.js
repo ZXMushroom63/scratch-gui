@@ -1,6 +1,8 @@
+const { javascript } = require("webpack");
 
 module.exports = {
     func: function () {
+        //Made by ZXMushroom63 for scratch++
         function blocklyDeveloperTools() {
             var Blockly = window.Blockly; //Blockly is usually exposed by default.
 
@@ -137,29 +139,34 @@ module.exports = {
 
             var style = document.createElement("style");
             style.innerHTML = `
-            /* Hide the ✏️ button on blocks that aren't top level */
-            g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker):not(g.blocklyBlockCanvas>g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker)) [data-is-blocklydev-btn] {
-                display: none !important;
-            }
+    /* Hide the ✏️ button on blocks that aren't top level */
+    g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker):not(g.blocklyBlockCanvas>g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker)) [data-is-blocklydev-btn] {
+        display: none !important;
+    }
 
-            /* Hide editor buttons on blocks that aren't top level */
-            g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker):not(g.blocklyBlockCanvas>g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker)) [data-is-blocklydev-editor-btn] {
-                display: none !important;
-            }
+    /* Hide editor buttons on blocks that aren't top level */
+    g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker):not(g.blocklyBlockCanvas>g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker)) [data-is-blocklydev-editor-btn] {
+        display: none !important;
+    }
 
-            /* Hide the XML editor on blocks that aren't top level */
-            g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker):not(g.blocklyBlockCanvas>g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker)) [data-isblocklydeveditor] {
-                display: none !important;
-            }
+    /* Hide the XML editor on blocks that aren't top level */
+    g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker):not(g.blocklyBlockCanvas>g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker)) [data-isblocklydeveditor] {
+        display: none !important;
+    }
 
-            /* Hide scrollbars on the XML editor */
-            div[data-isblocklydeveditor]::-webkit-scrollbar {
-                display: none;
-            }
-            div[data-isblocklydeveditor] {
-                scrollbar-width: none;
-            }
-            `;
+    /* Hide the XML editor on blocks that aren't top level */
+    g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker):not(g.blocklyBlockCanvas>g.blocklyDraggable[data-id]:not(.blocklyInsertionMarker)) .blockly-dev-tools-code-preview {
+        display: none !important;
+    }
+
+    /* Hide scrollbars on the XML editor */
+    div[data-isblocklydeveditor]::-webkit-scrollbar {
+        display: none;
+    }
+    div[data-isblocklydeveditor] {
+        scrollbar-width: none;
+    }
+    `;
             document.head.appendChild(style);
 
             //CSS would normally be injected here.
@@ -345,6 +352,14 @@ module.exports = {
                     collapse.innerText = "⬆️";
                     collapse.style.lineHeight = "1rem";
 
+                    const viewcode = document.createElement("span"); //Create the collapse/uncollapse button
+                    viewcode.style.cursor = "pointer";
+                    viewcode.style.zIndex = "999";
+                    viewcode.setAttribute("data-is-blocklydev-editor-btn", "true");
+                    viewcode.style.display = "none";
+                    viewcode.innerText = "📟";
+                    viewcode.style.lineHeight = "1rem";
+
                     const bin = document.createElement("span"); //Create the force delete button
                     bin.style.cursor = "pointer";
                     bin.style.zIndex = "999";
@@ -375,6 +390,9 @@ module.exports = {
                     //Add buttons to button wrapper
                     btnWrapper.appendChild(btn);
                     btnWrapper.appendChild(save);
+                    if (globalThis?.javascript?.javascriptGenerator) {
+                        btnWrapper.appendChild(viewcode);
+                    }
                     btnWrapper.appendChild(collapse);
                     btnWrapper.appendChild(bin);
 
@@ -403,7 +421,11 @@ module.exports = {
                                     element.remove();
                                 });
                                 save.style.display = "none";
+                                viewcode.style.display = "none";
                                 collapse.style.display = "none";
+                                if (devWrapper.querySelector(".blockly-dev-tools-code-preview")) {
+                                    devWrapper.querySelectorAll(".blockly-dev-tools-code-preview").forEach(x => x.remove());
+                                }
                             } else {
                                 //Add editor if it does not exist.
                                 internalBlock = workspace.getBlockById(blockId);
@@ -412,6 +434,7 @@ module.exports = {
                                 });
 
                                 save.style.display = "initial";
+                                viewcode.style.display = "initial";
                                 if (internalBlock.nextConnection || internalBlock.previousConnection) {
                                     collapse.style.display = "initial";
                                 }
@@ -457,6 +480,39 @@ module.exports = {
                         }
                     }, {
                         capture: true
+                    });
+
+                    viewcode.addEventListener("pointerdown", (event) => {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        if (element.hasAttribute("data-id")) {
+                            blockId = element.getAttribute("data-id");
+                            internalBlock = workspace.getBlockById(blockId);
+                            debugger;
+                            var code;
+                            try {
+                                code = javascript.javascriptGenerator.blockToCode(internalBlock)
+                            } catch (error) {
+                                code = "Error occurred while previewing code.";
+                            }
+                            if (devWrapper.querySelector(".blockly-dev-tools-code-preview")) {
+                                devWrapper.querySelectorAll(".blockly-dev-tools-code-preview").forEach(x => x.remove());
+                            }
+                            var display = document.createElement("div");
+                            display.innerText = code;
+                            display.style.color = "lightblue";
+                            display.style.font = "12pt monospace";
+                            display.style.backgroundColor = "rgb(0,0,20)";
+                            display.style.border = "2px solid white";
+                            display.style.borderRadius = "0.4rem";
+                            display.style.width = "max-content";
+                            display.style.padding = "8px";
+                            display.style.cursor = "auto";
+                            display.classList.add("blockly-dev-tools-code-preview");
+                            display.addEventListener("pointerdown", (event) => { event.stopPropagation(); }, { capture: true });
+                            display.addEventListener("contextmenu", (event) => { event.stopPropagation(); }, { capture: true });
+                            devWrapper.appendChild(display);
+                        }
                     });
 
                     bin.addEventListener("pointerdown", (event) => { //Force delete handler
