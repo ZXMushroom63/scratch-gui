@@ -488,12 +488,11 @@ module.exports = {
                         if (element.hasAttribute("data-id")) {
                             blockId = element.getAttribute("data-id");
                             internalBlock = workspace.getBlockById(blockId);
-                            debugger;
                             var code;
                             try {
                                 code = javascript.javascriptGenerator.blockToCode(internalBlock)
                             } catch (error) {
-                                code = "Error occurred while previewing code.";
+                                code = "ERR: " + error;
                             }
                             if (devWrapper.querySelector(".blockly-dev-tools-code-preview")) {
                                 devWrapper.querySelectorAll(".blockly-dev-tools-code-preview").forEach(x => x.remove());
